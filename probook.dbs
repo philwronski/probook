@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="Probook" id="Project_44d5e46" template="Default" database="PostgreSQL" >
+	<schema name="public" catalogname="probook" schemaname="public" >
+		<table name="account" >
+			<column name="id" type="uuid" decimal="0" jt="1111" mandatory="y" />
+			<column name="account_non_expired" type="bool" length="1" decimal="0" jt="-7" mandatory="y" />
+			<column name="account_non_locked" type="bool" length="1" decimal="0" jt="-7" mandatory="y" />
+			<column name="authorities" type="_text" decimal="0" jt="2003" />
+			<column name="credentials_non_expired" type="bool" length="1" decimal="0" jt="-7" mandatory="y" />
+			<column name="enabled" type="bool" length="1" decimal="0" jt="-7" mandatory="y" />
+			<column name="password" type="varchar" length="255" decimal="0" jt="12" />
+			<column name="username" type="varchar" length="255" decimal="0" jt="12" />
+			<column name="account_details_id" type="uuid" decimal="0" jt="1111" />
+			<index name="account_pkey" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk7p4g2vswnkoqu6ce95989u8pp" to_schema="public" to_table="account_details" >
+				<fk_column name="account_details_id" pk="id" />
+			</fk>
+		</table>
+		<table name="account_details" >
+			<column name="id" type="uuid" decimal="0" jt="1111" mandatory="y" />
+			<column name="age" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="first_name" type="varchar" length="255" decimal="0" jt="12" />
+			<column name="last_name" type="varchar" length="255" decimal="0" jt="12" />
+			<index name="account_details_pkey" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+	</schema>
+	<connector name="Probook" database="PostgreSQL" driver_class="org.postgresql.Driver" driver_jar="postgresql-42.1.4.jar" driver_desc="Standard" host="localhost" port="5432" instance="probook" user="probook" passwd="cHJvYm9vaw==" />
+	<layout name="Default Layout" id="Layout_820567" show_relation="columns" >
+		<entity schema="public" name="account" color="bfd4f5" x="195" y="45" />
+		<entity schema="public" name="account_details" color="bfd4f5" x="45" y="45" />
+	</layout>
+	<layout name="Sample Layout with Tools" id="Layout_52d9c16" show_column_type="y" show_relation="columns" >
+		<entity schema="public" name="account" color="bfd4f5" x="255" y="225" />
+		<entity schema="public" name="account_details" color="bfd4f5" x="45" y="225" />
+		<callout x="255" y="75" pointer="NO" >
+			<comment><![CDATA[Double-click any table, column or foreign key to edit, right-click to start one of the tools below.
+Use the Relational Data Browse for simultaneously exploring data from multiple tables.
+All tools will be saved to project file and can be reopen.]]></comment>
+		</callout>
+		<group name="account_details" color="ecf0f7" >
+			<entity schema="public" name="account_details" />
+			<entity schema="public" name="account" />
+		</group>
+		<script name="Sample SQL Editor" id="Editor_4b7e2d4" language="SQL" >
+			<string><![CDATA[SELECT * 
+FROM
+	"public".account t;]]></string>
+		</script>
+		<browser id="Browse_266d8f5" name="Sample Relational Data Browse" confirm_updates="y" >
+			<browse_table schema="public" entity="account" x="20" y="20" width="400" height="300" >
+				<browse_table schema="public" entity="account_details" fk="fk7p4g2vswnkoqu6ce95989u8pp" x="440" y="20" width="400" height="300" record_view="y" />
+			</browse_table>
+		</browser>
+		<query id="Query_530a9c7" name="Sample Query Builder" >
+			<query_table schema="public" name="account" alias="a" x="45" y="45" >
+				<column name="id" />
+				<column name="account_non_expired" />
+				<column name="account_non_locked" />
+				<column name="authorities" />
+				<column name="credentials_non_expired" />
+				<column name="enabled" />
+				<column name="password" />
+				<column name="username" />
+				<column name="account_details_id" />
+				<query_table schema="public" name="account_details" alias="ad" x="255" y="45" fk="fk7p4g2vswnkoqu6ce95989u8pp" type="Inner Join" >
+					<column name="id" />
+					<column name="age" />
+					<column name="first_name" />
+					<column name="last_name" />
+				</query_table>
+			</query_table>
+		</query>
+	</layout>
+</project>
